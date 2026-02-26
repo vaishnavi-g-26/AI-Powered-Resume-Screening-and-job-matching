@@ -2,10 +2,7 @@
 
 🔍 Intelligent Hiring Using AI, ML & NLP
 
-An AI-driven full-stack web application that automates resume screening, skill gap analysis, and candidate ranking using Machine Learning and Natural Language Processing.
-
-
-
+An AI-driven full-stack web application that automates resume screening, skill gap analysis, and candidate ranking using Machine Learning and Natural Language Processing. <br>
 
 📌 Problem Statement
 
@@ -19,7 +16,7 @@ Companies receive hundreds of resumes per job opening. Manual screening is:
 
 • Expensive
 
-This system automates the entire screening process using AI.
+This system automates the entire screening process using AI. <br>
 
 
 💡 Solution
@@ -38,7 +35,7 @@ The system:
 
 • Predicts job category using Logistic Regression (trained on 9,544 resumes)
 
-• Ranks candidates automatically
+• Ranks candidates automatically <br>
 
 
 🧠 Tech Stack
@@ -59,7 +56,7 @@ The system:
 
 • SQLAlchemy
 
-• Flask-Login
+• Flask-Login <br>
 
 
 ⚙️ AI Pipeline
@@ -67,7 +64,7 @@ The system:
 Resume Upload → Text Extraction → NLP Cleaning →
 Skill Recognition → Semantic Expansion →
 TF-IDF Vectorization → Cosine Similarity →
-ML Job Prediction → Ranked Output
+ML Job Prediction → Ranked Output <br>
 
 🏆 Key Features
 For Candidates
@@ -78,7 +75,7 @@ For Candidates
 
 • Career Fit Prediction
 
-• Skill Gap Report
+• Skill Gap Report <br>
 
 
 For HR / Admin
@@ -89,7 +86,7 @@ For HR / Admin
 
 • Download resume from database
 
-• Data-driven hiring decisions
+• Data-driven hiring decisions <br>
 
 
 📊 Scoring Formula
@@ -97,12 +94,12 @@ For HR / Admin
 If all skills match → 100%
 
 Otherwise:
-Final Score = (Skill Match × 70%) + (TF-IDF Score × 30%)
+Final Score = (Skill Match × 70%) + (TF-IDF Score × 30%) <br>
 
 
 📷 Screenshots
 
-
+<br>
 📈 Business Impact
 
 • Reduces screening time from hours to seconds
@@ -111,7 +108,7 @@ Final Score = (Skill Match × 70%) + (TF-IDF Score × 30%)
 
 • Provides structured candidate feedback
 
-• Improves hiring efficiency
+• Improves hiring efficiency <br>
 
 
 👩‍💻 Developed By
