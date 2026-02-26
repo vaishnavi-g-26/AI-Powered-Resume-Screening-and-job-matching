@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: #ffffff;
+    width: 450px;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.label {
+    display: block;
+    text-align: left;
+    margin: 15px 0 5px;
+    font-weight: 600;
+    color: #444;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+textarea {
+    width: 100%;
+    height: 180px;   /* 👈 BIGGER JOB DESCRIPTION BOX */
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    font-size: 14px;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background: #667eea;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #5a67d8;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f4f6ff;
+    border-radius: 12px;
+}
+
+.score {
+    font-size: 36px;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.category {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #333;
+}
+
+.great {
+    color: #2ecc71;
+}
+
+.good {
+    color: #27ae60;
+}
+
+.average {
+    color: #f39c12;
+}
+
+.poor {
+    color: #e74c3c;
+}
