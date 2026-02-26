@@ -1,0 +1,9 @@
+Flask
+PyPDF2
+python-docx
+scikit-learn
+nltk
+spacy
+numpy
+pandas
+pdfminer.six
