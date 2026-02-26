@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hire Vision | AI Resume Screening</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f4c5c;
+            --primary-light: #1a6878;
+            --accent: #e8a045;
+            --accent-light: #f5c27a;
+            --bg: #eef2f4;
+            --text-dark: #1a2b30;
+            --text-muted: #5a7a82;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg);
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(8,35,42,0.85);
+           backdrop-filter: none;
+            
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+  
+            padding: 16px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 25px rgba(0,0,0,0.35);
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav-link {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+            padding: 7px 16px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            padding: 7px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-login:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-color: rgba(255,255,255,0.7);
+        }
+        .btn-register {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(232,160,69,0.35);
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-register:hover {
+            background: var(--accent-light);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(232,160,69,0.45);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 55%, #2a8fa8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 20px 60px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -120px; left: -80px;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: rgba(232,160,69,0.06);
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 28px;
+            letter-spacing: 0.3px;
+        }
+        .hero-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent-light);
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.4rem, 5vw, 3.8rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .hero h1 .accent-word {
+            color: var(--accent-light);
+        }
+        .hero-subtitle {
+            font-size: 16px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 14px;
+            letter-spacing: 0.3px;
+        }
+        .hero-tech-tags {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+        .tech-tag {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.8);
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+        .btn-hero-primary {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 10px;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-hero-primary:hover {
+            background: var(--bg);
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.2);
+        }
+        .btn-hero-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 10px;
+            padding: 14px 32px;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-hero-outline:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-color: white;
+        }
+
+        /* SCROLL INDICATOR */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            color: rgba(255,255,255,0.4);
+            font-size: 12px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* STATS STRIP */
+        .stats-strip {
+            background: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 20px rgba(15,76,92,0.07);
+        }
+        .stat-item {
+            text-align: center;
+            padding: 10px 20px;
+            border-right: 1px solid #e8edf0;
+        }
+        .stat-item:last-child { border-right: none; }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* HOW IT WORKS */
+        .section {
+            padding: 80px 0;
+        }
+        .section-tag {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+        .section-sub {
+            font-size: 15px;
+            color: var(--text-muted);
+            max-width: 520px;
+            margin: 0 auto 50px;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px 28px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(15,76,92,0.07);
+            transition: all 0.25s;
+            height: 100%;
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(15,76,92,0.13);
+        }
+        .step-num {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-family: 'Playfair Display', serif;
+        }
+        .step-icon { font-size: 1.6rem; margin-bottom: 4px; }
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* FEATURES */
+        .features-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 80px 0;
+            color: white;
+        }
+        .feature-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .feature-icon-box {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .feature-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+        }
+        .feature-visual {
+            background: rgba(255,255,255,0.07);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .feature-visual .big-icon { font-size: 5rem; margin-bottom: 16px; }
+        .feature-visual p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--bg);
+            padding: 80px 0;
+            text-align: center;
+        }
+        .cta-card {
+            background: white;
+            border-radius: 24px;
+            padding: 60px 40px;
+            box-shadow: 0 10px 40px rgba(15,76,92,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .cta-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 14px;
+        }
+        .cta-card p {
+            font-size: 15px;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+        .btn-cta {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 14px 36px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s;
+            box-shadow: 0 6px 20px rgba(15,76,92,0.3);
+            display: inline-block;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-cta:hover {
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(15,76,92,0.4);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.7);
+            padding: 40px 0 20px;
+        }
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+        }
+        .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); }
+        .footer-divider { border-color: rgba(255,255,255,0.1); margin: 24px 0; }
+        .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); text-align: center; }
+        .footer-link {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .footer-link:hover { color: var(--accent-light); }
+        .footer-col-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 14px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='smart_ats_logo.svg') }}" 
+         height="38" width="38" 
+         style="border-radius: 50%;">
+    Hire Vision
+</a>
+    <div class="nav-links">
+        <a href="#how-it-works" class="nav-link">⚙️ How It Works</a>
+        <a href="#features" class="nav-link">✨ Features</a>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('login') }}" class="btn-login">Login</a>
+        <a href="{{ url_for('register') }}" class="btn-register">Register</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        
+        <h1>
+            AI-Powered<br>
+            <span class="accent-word">Resume Screening</span>
+        </h1>
+        
+        <div class="hero-tech-tags">
+            <span class="tech-tag">🎯 Smart Job Matching</span>
+            <span class="tech-tag">📄 Resume Analysis</span>
+            <span class="tech-tag">🏆 Candidate Ranking</span>
+            <span class="tech-tag">⚡ Instant Skill Scoring</span>
+            
+            <span class="tech-tag">💼 20+ Job Roles</span>
+        </div>
+        <div class="hero-buttons">
+            <a href="{{ url_for('register') }}" class="btn-hero-primary">🚀 Get Started</a>
+            <a href="{{ url_for('login') }}" class="btn-hero-outline">Login to Dashboard</a>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll</span>
+        <span>↓</span>
+    </div>
+</section>
+
+<!-- STATS STRIP -->
+<section class="stats-strip">
+    <div class="container">
+        <div class="row g-0 justify-content-center">
+            <div class="col-3 stat-item">
+                <div class="stat-num">20+</div>
+                <div class="stat-label">Job Openings</div>
+            </div>
+            <div class="col-3 stat-item">
+                <div class="stat-num">6</div>
+                <div class="stat-label">Job Categories</div>
+            </div>
+            <div class="col-3 stat-item">
+                <div class="stat-num">AI</div>
+                <div class="stat-label">Skill Matching</div>
+            </div>
+            <div class="col-3 stat-item">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Free to Use</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+    <div class="container text-center">
+        <div class="section-tag">Simple Process</div>
+        <h2 class="section-title">How It Works</h2>
+        <p class="section-sub">Three simple steps to find your perfect job match using AI technology.</p>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-num">1</div>
+                    <div class="step-icon">📝</div>
+                    <h5 class="step-title">Register & Login</h5>
+                    <p class="step-desc">Create your candidate account in seconds and log in to access all available job listings.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-num">2</div>
+                    <div class="step-icon">📄</div>
+                    <h5 class="step-title">Upload Your Resume</h5>
+                    <p class="step-desc">Browse jobs and upload your PDF or DOCX resume. Our AI will extract and analyze your skills instantly.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="step-card">
+                    <div class="step-num">3</div>
+                    <div class="step-icon">🎯</div>
+                    <h5 class="step-title">Get Your Match Score</h5>
+                    <p class="step-desc">Receive a detailed match score, matched skills, missing skills, and a personalized recommendation.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-md-6">
+                <div class="section-tag" style="color: var(--accent-light);">What We Offer</div>
+                <h2 class="section-title" style="color:white;">Smart Features for Smart Hiring</h2>
+
+                <div class="feature-item">
+                    <div class="feature-icon-box">🧠</div>
+                    <div>
+                        <div class="feature-title">AI Skill Matching</div>
+                        <p class="feature-desc">Our NLP engine extracts skills from your resume and matches them against job requirements in real-time.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">📊</div>
+                    <div>
+                        <div class="feature-title">Match Score & Gap Analysis</div>
+                        <p class="feature-desc">Get a percentage match score with a clear breakdown of matched and missing skills for every job.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-box">🔍</div>
+                    <div>
+                        <div class="feature-title">Smart Job Search & Filters</div>
+                        <p class="feature-desc">Filter jobs by category, type, and search by keyword to find exactly what you're looking for.</p>
+                    </div>
+                </div>
+                <div class="feature-item mb-0">
+                    <div class="feature-icon-box">🔒</div>
+                    <div>
+                        <div class="feature-title">Secure & Private</div>
+                        <p class="feature-desc">Your resume data is stored securely and used only for matching purposes. Your privacy is our priority.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-visual">
+                    <div class="big-icon">🎯</div>
+                    <h4 style="font-family:'Playfair Display',serif; color:white; margin-bottom:12px;">Instant AI Analysis</h4>
+                    <p>Upload → Extract → Match → Result<br>All in under 3 seconds.</p>
+                    <div class="mt-4 d-flex justify-content-center gap-3 flex-wrap">
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:12px 20px; font-size:13px; color:rgba(255,255,255,0.8);">✅ Strong Fit → 75%+</div>
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:12px 20px; font-size:13px; color:rgba(255,255,255,0.8);">🟡 Moderate → 50–74%</div>
+                        <div style="background:rgba(255,255,255,0.1); border-radius:12px; padding:12px 20px; font-size:13px; color:rgba(255,255,255,0.8);">❌ Weak Fit → Below 50%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <div class="cta-card">
+            <h2>Ready to Find Your Perfect Job?</h2>
+            <p>Join Hire Vision today and let AI do the heavy lifting. Upload your resume and get matched instantly.</p>
+            <a href="{{ url_for('register') }}" class="btn-cta">🚀 Get Started — It's Free</a>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="footer-brand">🚀 AI Resume System</div>
+                <div class="footer-tagline">Hire Vision — AI-Powered Resume Screening Platform</div>
+                <p style="font-size:13px; color:rgba(255,255,255,0.4); margin-top:10px;">📍 Pune, Maharashtra, India</p>
+            </div>
+            <div class="col-md-2 mb-4">
+                <div class="footer-col-title">Platform</div>
+                <a href="{{ url_for('login') }}" class="footer-link">Login</a>
+                <a href="{{ url_for('register') }}" class="footer-link">Register</a>
+                <a href="#how-it-works" class="footer-link">How It Works</a>
+            </div>
+            <div class="col-md-2 mb-4">
+                <div class="footer-col-title">Features</div>
+                <a href="#features" class="footer-link">AI Matching</a>
+                <a href="#features" class="footer-link">Skill Analysis</a>
+                <a href="#features" class="footer-link">Job Search</a>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="footer-col-title">Tech Stack</div>
+                <p style="font-size:13px; color:rgba(255,255,255,0.45); line-height:1.7;">
+                    Python • Flask • PostgreSQL<br>
+                    NLP • TF-IDF • Cosine Similarity<br>
+                    PyPDF2 • SQLAlchemy • Bootstrap
+                </p>
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-copy">© 2025 AI Resume System — Hire Vision. Built with Flask & PostgreSQL. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

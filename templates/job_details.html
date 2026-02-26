@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ job.title }} | Hire Vision</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f4c5c;
+            --primary-light: #1a6878;
+            --accent: #e8a045;
+            --bg: #eef2f4;
+            --card-bg: #ffffff;
+            --text-dark: #1a2b30;
+            --text-muted: #5a7a82;
+        }
+
+        body {
+            background-color: var(--bg);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: var(--primary) !important;
+            padding: 16px 32px;
+            box-shadow: 0 2px 20px rgba(15,76,92,0.3);
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: white !important;
+        }
+        .btn-back {
+            background: rgba(255,255,255,0.12);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 8px;
+            padding: 7px 18px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-back:hover {
+            background: rgba(255,255,255,0.22);
+            color: white;
+        }
+
+        /* HERO */
+        .header-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, #2a8fa8 100%);
+            color: white;
+            padding: 55px 50px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(15,76,92,0.25);
+        }
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 250px; height: 250px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+        }
+        .header-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px; left: -40px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            background: rgba(232,160,69,0.08);
+        }
+        .header-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 5px 16px;
+            font-size: 13px;
+            margin-right: 8px;
+            margin-top: 4px;
+        }
+
+        /* CARDS */
+        .info-card {
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 20px rgba(15,76,92,0.07);
+            background: var(--card-bg);
+            transition: box-shadow 0.2s;
+        }
+        .info-card:hover { box-shadow: 0 8px 30px rgba(15,76,92,0.12); }
+        .info-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.15rem;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--bg);
+        }
+        .info-card ul li {
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+        .info-card ul li::marker { color: var(--accent); }
+
+        .skill-tag {
+            display: inline-block;
+            background: rgba(15,76,92,0.08);
+            color: var(--primary);
+            border: 1px solid rgba(15,76,92,0.15);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 3px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .meta-icon {
+            width: 30px; height: 30px;
+            background: rgba(15,76,92,0.08);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* APPLY CARD */
+        .apply-card {
+            border-radius: 16px;
+            border: none;
+            box-shadow: 0 4px 25px rgba(15,76,92,0.1);
+            background: var(--card-bg);
+            padding: 28px;
+            position: sticky;
+            top: 20px;
+        }
+        .apply-card h5 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+        .apply-subtitle {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .apply-divider {
+            height: 1px;
+            background: var(--bg);
+            margin: 18px 0;
+        }
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #d0dde0;
+            padding: 10px 14px;
+            font-size: 14px;
+        }
+        .form-control:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 3px rgba(15,76,92,0.1);
+        }
+        .btn-apply {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.25s;
+            box-shadow: 0 4px 15px rgba(15,76,92,0.3);
+            cursor: pointer;
+        }
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15,76,92,0.4);
+            color: white;
+        }
+        .security-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-align: center;
+            margin: 0;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.7);
+            padding: 35px 0 20px;
+            margin-top: auto;
+        }
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.45); }
+        .footer-divider { border-color: rgba(255,255,255,0.1); margin: 20px 0; }
+        .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); text-align: center; }
+        .footer-link {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: #f5c27a; }
+
+        main { flex: 1; }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark px-4 d-flex justify-content-between align-items-center">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='smart_ats_logo.svg') }}" 
+         height="38" width="38" 
+         style="border-radius: 50%;">
+    Hire Vision
+</a>
+
+    <a href="{{ url_for('candidate_dashboard') }}" class="btn-back">← Back</a>
+</nav>
+
+<main>
+<div class="container mt-4 mb-5">
+
+    <!-- HERO -->
+    <div class="header-section mb-4">
+        <h2>{{ job.title }}</h2>
+        <div>
+            <span class="header-badge">📍 Pune, India</span>
+            <span class="header-badge">🕒 1–3 Years Experience</span>
+            <span class="header-badge">💼 Full-Time</span>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- LEFT -->
+        <div class="col-md-8">
+
+            <div class="card info-card p-4 mb-4">
+                <h4>Job Description</h4>
+                <p class="text-muted" style="font-size:15px; line-height:1.7;">{{ job.description }}</p>
+                <div class="mt-2">
+                    {% for skill in job.description.split(",") %}
+                        <span class="skill-tag">{{ skill.strip() }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="card info-card p-4 mb-4">
+                <h4>Key Responsibilities</h4>
+                {% if job.title == "Python Developer" %}
+                <ul>
+                    <li>Develop backend APIs using Flask/Django</li>
+                    <li>Work with PostgreSQL database</li>
+                    <li>Build RESTful services</li>
+                    <li>Write clean and scalable Python code</li>
+                </ul>
+                {% elif job.title == "Full Stack Developer" %}
+                <ul>
+                    <li>Develop frontend using React</li>
+                    <li>Build backend using Node.js</li>
+                    <li>Integrate APIs and third-party services</li>
+                    <li>Work with SQL databases</li>
+                </ul>
+                {% elif job.title == "Digital Marketing Executive" %}
+                <ul>
+                    <li>Plan and execute digital marketing campaigns</li>
+                    <li>Manage SEO, SEM, and Google Ads</li>
+                    <li>Analyze marketing data and report performance</li>
+                    <li>Grow and manage social media presence</li>
+                </ul>
+                {% elif job.title == "Data Scientist" %}
+                <ul>
+                    <li>Analyze large datasets using Python and Pandas</li>
+                    <li>Build and evaluate machine learning models</li>
+                    <li>Create data visualizations and dashboards</li>
+                    <li>Communicate insights to business stakeholders</li>
+                </ul>
+                {% elif job.title == "Machine Learning Engineer" %}
+                <ul>
+                    <li>Design and implement ML pipelines</li>
+                    <li>Train models using TensorFlow and Scikit-learn</li>
+                    <li>Deploy models to production environments</li>
+                    <li>Optimize model performance and accuracy</li>
+                </ul>
+                {% elif job.title == "DevOps Engineer" %}
+                <ul>
+                    <li>Manage CI/CD pipelines and deployments</li>
+                    <li>Work with Docker and Kubernetes</li>
+                    <li>Monitor and maintain cloud infrastructure on AWS</li>
+                    <li>Automate operational tasks using scripts</li>
+                </ul>
+                {% elif job.title == "Cyber Security Analyst" %}
+                <ul>
+                    <li>Monitor network traffic for security threats</li>
+                    <li>Conduct vulnerability assessments and penetration testing</li>
+                    <li>Manage firewalls and SIEM tools</li>
+                    <li>Respond to and investigate security incidents</li>
+                </ul>
+                {% elif job.title == "Backend Developer" %}
+                <ul>
+                    <li>Build and maintain server-side APIs using Django</li>
+                    <li>Design and manage PostgreSQL databases</li>
+                    <li>Ensure application security and performance</li>
+                    <li>Collaborate with frontend teams on integration</li>
+                </ul>
+                {% elif job.title == "Frontend Developer" %}
+                <ul>
+                    <li>Build responsive UIs using React and Bootstrap</li>
+                    <li>Convert designs into clean HTML/CSS/JS code</li>
+                    <li>Optimize web performance and load times</li>
+                    <li>Work closely with backend developers on APIs</li>
+                </ul>
+                {% elif job.title == "Cloud Engineer" %}
+                <ul>
+                    <li>Design and manage cloud infrastructure on AWS/Azure</li>
+                    <li>Implement cloud security best practices</li>
+                    <li>Automate infrastructure using IaC tools</li>
+                    <li>Monitor cloud costs and optimize resources</li>
+                </ul>
+                {% elif job.title == "Database Administrator" %}
+                <ul>
+                    <li>Manage and maintain PostgreSQL and MySQL databases</li>
+                    <li>Perform regular backups and disaster recovery</li>
+                    <li>Optimize query performance and indexing</li>
+                    <li>Ensure data security and access control</li>
+                </ul>
+                {% elif job.title == "UI/UX Designer" %}
+                <ul>
+                    <li>Design wireframes and prototypes using Figma/Adobe XD</li>
+                    <li>Conduct user research and usability testing</li>
+                    <li>Create intuitive and accessible user interfaces</li>
+                    <li>Collaborate with developers for implementation</li>
+                </ul>
+                {% elif job.title == "Graphic Designer" %}
+                <ul>
+                    <li>Design marketing materials and brand assets</li>
+                    <li>Work with Photoshop and Illustrator</li>
+                    <li>Maintain brand consistency across all designs</li>
+                    <li>Collaborate with content and marketing teams</li>
+                </ul>
+                {% elif job.title == "Content Marketing Specialist" %}
+                <ul>
+                    <li>Write SEO-optimized blogs and articles</li>
+                    <li>Manage content calendar and publishing schedule</li>
+                    <li>Analyze content performance using analytics tools</li>
+                    <li>Develop content strategies to drive traffic</li>
+                </ul>
+                {% elif job.title == "HR Executive" %}
+                <ul>
+                    <li>Manage end-to-end recruitment process</li>
+                    <li>Handle employee onboarding and offboarding</li>
+                    <li>Process payroll and maintain HR records</li>
+                    <li>Address employee relations and grievances</li>
+                </ul>
+                {% elif job.title == "Talent Acquisition Specialist" %}
+                <ul>
+                    <li>Source and screen candidates for open roles</li>
+                    <li>Conduct interviews and coordinate hiring panels</li>
+                    <li>Manage job postings across platforms</li>
+                    <li>Build and maintain a talent pipeline</li>
+                </ul>
+                {% elif job.title == "Financial Analyst" %}
+                <ul>
+                    <li>Build financial models and forecasts in Excel</li>
+                    <li>Prepare budget reports and variance analysis</li>
+                    <li>Support management with data-driven decisions</li>
+                    <li>Monitor financial performance and KPIs</li>
+                </ul>
+                {% elif job.title == "Accountant" %}
+                <ul>
+                    <li>Manage accounts using Tally software</li>
+                    <li>Handle GST filings and tax compliance</li>
+                    <li>Prepare financial statements and reports</li>
+                    <li>Reconcile accounts and audit financial records</li>
+                </ul>
+                {% elif job.title == "Project Manager" %}
+                <ul>
+                    <li>Plan and manage project timelines and milestones</li>
+                    <li>Lead Agile/Scrum ceremonies and sprints</li>
+                    <li>Coordinate cross-functional teams</li>
+                    <li>Track risks and ensure on-time delivery</li>
+                </ul>
+                {% elif job.title == "Business Analyst" %}
+                <ul>
+                    <li>Gather and document business requirements</li>
+                    <li>Bridge gap between stakeholders and tech teams</li>
+                    <li>Analyze data using SQL and Excel</li>
+                    <li>Create process flow diagrams and reports</li>
+                </ul>
+                {% else %}
+                <ul>
+                    <li>Perform core job responsibilities as per role</li>
+                    <li>Collaborate with team members effectively</li>
+                    <li>Deliver quality work within deadlines</li>
+                    <li>Continuously improve skills and knowledge</li>
+                </ul>
+                {% endif %}
+            </div>
+
+            <div class="card info-card p-4">
+                <h4>Job Information</h4>
+                <div class="meta-item"><span class="meta-icon">📍</span> Pune, Maharashtra, India</div>
+                <div class="meta-item"><span class="meta-icon">💼</span> Employment Type: Full-Time</div>
+                <div class="meta-item"><span class="meta-icon">🎓</span> Experience: 1–3 Years</div>
+                <div class="meta-item"><span class="meta-icon">💰</span> Salary: Competitive (Based on experience)</div>
+                <div class="meta-item"><span class="meta-icon">🏢</span> Work Mode: Hybrid</div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT — APPLY -->
+        <div class="col-md-4">
+            <div class="apply-card">
+                <h5>Apply for this Job</h5>
+                <p class="apply-subtitle">Upload your resume and let our AI match your skills instantly.</p>
+                <div class="apply-divider"></div>
+                <form action="{{ url_for('apply', job_id=job.id) }}"
+                      method="POST"
+                      enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">📄 Upload Resume (PDF or DOCX)</label>
+                        <input type="file" name="resume" class="form-control" accept=".pdf,.docx" required>
+                        <div class="form-text" style="font-size:12px; color:var(--text-muted); margin-top:5px;">Max file size: 5MB</div>
+                    </div>
+                    <button type="submit" class="btn-apply">⚡ Apply Now</button>
+                </form>
+                <div class="apply-divider"></div>
+                <p class="security-note">🔒 Your data is secure and used only for this application.</p>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for msg in messages %}
+                    <div class="alert alert-warning mt-3" style="border-radius:10px; font-size:14px;">{{ msg }}</div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+
+    </div>
+</div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <div class="footer-brand">🚀 Hire Vision</div>
+                <div class="footer-tagline">AI-Powered Resume Screening Platform</div>
+            </div>
+            <div class="col-md-4 text-center">
+                <a href="{{ url_for('candidate_dashboard') }}" class="footer-link me-3">Browse Jobs</a>
+                <a href="{{ url_for('home') }}" class="footer-link me-3">Home</a>
+                <a href="{{ url_for('logout') }}" class="footer-link">Logout</a>
+            </div>
+            <div class="col-md-4 text-end" style="font-size:13px; color:rgba(255,255,255,0.45);">
+                📍 Pune, Maharashtra, India
+            </div>
+        </div>
+        <hr class="footer-divider">
+        <p class="footer-copy">© 2025 Hire Vision. Built with Flask & PostgreSQL. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

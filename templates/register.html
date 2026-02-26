@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register - AI Resume System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f4c5c;
+            --primary-light: #1a6878;
+            --accent: #e8a045;
+            --accent-light: #f5c27a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 55%, #2a8fa8 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -120px; right: -120px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -150px; left: -100px;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: rgba(232,160,69,0.07);
+            pointer-events: none;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(8,35,42,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 6px; }
+        .nav-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { color: white; background: rgba(255,255,255,0.1); }
+        .btn-login-nav {
+            background: transparent;
+            color: white;
+            border: 1.5px solid rgba(255,255,255,0.4);
+            border-radius: 8px;
+            padding: 7px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-login-nav:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-color: rgba(255,255,255,0.7);
+        }
+
+        /* MAIN */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .register-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 960px;
+            width: 100%;
+        }
+
+        /* LEFT SIDE */
+        .register-left {
+            flex: 1;
+            color: white;
+            display: none;
+        }
+        @media (min-width: 768px) { .register-left { display: block; } }
+
+        .register-left .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 5px 16px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+        .register-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .register-left p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .register-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.75);
+        }
+        .register-feature-icon {
+            width: 30px; height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* GLASS CARD */
+        .register-card {
+            background: rgba(255,255,255,0.13);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 24px;
+            padding: 40px 38px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .register-card-header {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .register-card-icon {
+            width: 56px; height: 56px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .register-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+        .register-card .subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        /* FORM */
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 6px;
+        }
+        .form-control, .form-select {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 14px;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .form-control:focus, .form-select:focus {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.45);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+            color: white;
+            outline: none;
+        }
+        .form-select option {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Role selector pills */
+        .role-selector {
+            display: flex;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .role-pill {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1.5px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.7);
+            font-size: 13px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .role-pill:hover {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border-color: rgba(255,255,255,0.4);
+        }
+        .role-pill.active {
+            background: rgba(255,255,255,0.2);
+            border-color: rgba(255,255,255,0.6);
+            color: white;
+            font-weight: 600;
+        }
+
+        .btn-register {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .btn-register:hover {
+            background: #f0f8fa;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            margin: 20px 0;
+        }
+
+        .login-link {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .login-link a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .login-link a:hover { color: white; }
+
+        /* FLASH */
+        .alert-danger {
+            background: rgba(220,53,69,0.2);
+            border: 1px solid rgba(220,53,69,0.35);
+            border-radius: 10px;
+            color: #ffb3b3;
+            font-size: 13px;
+            padding: 10px 14px;
+            margin-bottom: 16px;
+        }
+
+        /* FOOTER */
+        .page-footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a href="{{ url_for('home') }}" class="navbar-brand fw-bold">
+        <img src="{{ url_for('static', filename='smart_ats_logo.svg') }}"
+             height="38" width="38"
+             style="border-radius:50%; box-shadow:0 0 14px rgba(6,182,212,0.5); border:1.5px solid rgba(255,255,255,0.2);">
+        Hire Vision
+    </a>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-link">🏠 Home</a>
+        <a href="{{ url_for('home') }}#how-it-works" class="nav-link">⚙️ How It Works</a>
+        <a href="{{ url_for('home') }}#features" class="nav-link">✨ Features</a>
+    </div>
+    <a href="{{ url_for('login') }}" class="btn-login-nav">Login</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main-content">
+    <div class="register-wrapper">
+
+        <!-- LEFT TEXT -->
+        <div class="register-left">
+            <div class="eyebrow">🚀 Join Hire Vision</div>
+            <h2>Start Your<br>Journey Today!</h2>
+            <p>Create your free account and let AI match your skills to the perfect job — instantly and accurately.</p>
+            <div class="register-feature">
+                <div class="register-feature-icon">🎯</div>
+                AI-powered resume matching
+            </div>
+            <div class="register-feature">
+                <div class="register-feature-icon">📊</div>
+                Real-time skill gap analysis
+            </div>
+            <div class="register-feature">
+                <div class="register-feature-icon">💼</div>
+                Browse 20+ job opportunities
+            </div>
+            <div class="register-feature">
+                <div class="register-feature-icon">🏆</div>
+                Instant match score & ranking
+            </div>
+            <div class="register-feature">
+                <div class="register-feature-icon">🔒</div>
+                100% secure & free to use
+            </div>
+        </div>
+
+        <!-- GLASS CARD -->
+        <div class="register-card">
+            <div class="register-card-header">
+                <div class="register-card-icon">✍️</div>
+                <h3>Register</h3>
+                <p class="subtitle">Create your free account</p>
+            </div>
+
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert-danger">⚠ {{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">👤 Full Name</label>
+                    <input type="text" name="name" class="form-control"
+                           placeholder="Enter your full name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">📧 Email</label>
+                    <input type="email" name="email" class="form-control"
+                           placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">🔒 Password</label>
+                    <input type="password" name="password" class="form-control"
+                           placeholder="Create a password" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">🎭 Register As</label>
+                    <div class="role-selector">
+                        <label class="role-pill active" onclick="selectRole(this, 'candidate')">
+                            👤 Candidate
+                        </label>
+                        <label class="role-pill" onclick="selectRole(this, 'admin')">
+                            🔥 Admin
+                        </label>
+                    </div>
+                    <input type="hidden" name="role" id="roleInput" value="candidate">
+                </div>
+                <button type="submit" class="btn-register">Create Account →</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <div class="login-link">
+                Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+    © 2025 Hire Vision — AI Resume Screening. All rights reserved.
+</div>
+
+<script>
+function selectRole(el, role) {
+    document.querySelectorAll('.role-pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('roleInput').value = role;
+}
+</script>
+
+</body>
+</html>

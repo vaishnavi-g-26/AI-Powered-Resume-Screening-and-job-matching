@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login - AI Resume System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0f4c5c;
+            --primary-light: #1a6878;
+            --accent: #e8a045;
+            --accent-light: #f5c27a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 55%, #2a8fa8 100%);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background decorative circles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -120px; right: -120px;
+            width: 500px; height: 500px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.04);
+            pointer-events: none;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            bottom: -150px; left: -100px;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: rgba(232,160,69,0.07);
+            pointer-events: none;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(8,35,42,0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 14px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 10;
+        }
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover {
+            color: white;
+            background: rgba(255,255,255,0.1);
+        }
+        .btn-register-nav {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 7px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .btn-register-nav:hover {
+            background: var(--accent-light);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* SPLIT LAYOUT */
+        .login-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* LEFT SIDE TEXT */
+        .login-left {
+            flex: 1;
+            color: white;
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .login-left { display: block; }
+        }
+        .login-left .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            padding: 5px 16px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 20px;
+        }
+        .login-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+        .login-left p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+        .login-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.75);
+        }
+        .login-feature-icon {
+            width: 30px; height: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* GLASS CARD */
+        .login-card {
+            background: rgba(255,255,255,0.13);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.22);
+            border-radius: 24px;
+            padding: 44px 40px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .login-card-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .login-card-icon {
+            width: 56px; height: 56px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin: 0 auto 14px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .login-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 6px;
+        }
+        .login-card .subtitle {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* FORM ELEMENTS */
+        .form-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 6px;
+        }
+        .form-control {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 11px 16px;
+            font-size: 14px;
+            color: white;
+            font-family: 'DM Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .form-control::placeholder { color: rgba(255,255,255,0.4); }
+        .form-control:focus {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.45);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.08);
+            color: white;
+            outline: none;
+        }
+
+        .btn-login {
+            background: white;
+            color: var(--primary);
+            border: none;
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .btn-login:hover {
+            background: #f0f8fa;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255,255,255,0.15);
+            margin: 22px 0;
+        }
+
+        .register-link {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+        .register-link a {
+            color: var(--accent-light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .register-link a:hover { color: white; }
+
+        /* FLASH */
+        .alert-danger {
+            background: rgba(220,53,69,0.2);
+            border: 1px solid rgba(220,53,69,0.35);
+            border-radius: 10px;
+            color: #ffb3b3;
+            font-size: 13px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+        }
+
+        /* FOOTER */
+        .login-footer {
+            text-align: center;
+            padding: 16px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            position: relative;
+            z-index: 5;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='smart_ats_logo.svg') }}" 
+         height="38" width="38" 
+         style="border-radius: 50%;">
+    Hire Vision
+</a>
+
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}" class="nav-link">🏠 Home</a>
+        <a href="{{ url_for('home') }}#how-it-works" class="nav-link">How It Works</a>
+        <a href="{{ url_for('home') }}#features" class="nav-link">Features</a>
+    </div>
+    <a href="{{ url_for('register') }}" class="btn-register-nav">Register</a>
+</nav>
+
+<!-- MAIN -->
+<div class="main-content">
+    <div class="login-wrapper">
+
+        <!-- LEFT TEXT -->
+        <div class="login-left">
+            <div class="eyebrow">✨ Hire Vision Platform</div>
+            <h2>Welcome<br>Back!</h2>
+            <p>Log in to explore AI-matched job opportunities and track your applications in one place.</p>
+            <div class="login-feature">
+                <div class="login-feature-icon">🎯</div>
+                AI-powered resume matching
+            </div>
+            <div class="login-feature">
+                <div class="login-feature-icon">📊</div>
+                Real-time skill gap analysis
+            </div>
+            <div class="login-feature">
+                <div class="login-feature-icon">💼</div>
+                20+ job opportunities
+            </div>
+            <div class="login-feature">
+                <div class="login-feature-icon">🔒</div>
+                Secure & private platform
+            </div>
+        </div>
+
+        <!-- GLASS CARD -->
+        <div class="login-card">
+            <div class="login-card-header">
+                <div class="login-card-icon">🔑</div>
+                <h3>Login</h3>
+                <p class="subtitle">Sign in to your account</p>
+            </div>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for msg in messages %}
+                <div class="alert-danger">⚠ {{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+            {% endwith %}
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">📧 Email</label>
+                    <input type="email" name="email" class="form-control"
+                           placeholder="Enter your email" required>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">🔒 Password</label>
+                    <input type="password" name="password" class="form-control"
+                           placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn-login">Login →</button>
+            </form>
+
+            <div class="divider"></div>
+
+            <div class="register-link">
+                Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="login-footer">
+    © 2025 AI Resume System — Hire Vision. All rights reserved.
+</div>
+
+</body>
+</html>
