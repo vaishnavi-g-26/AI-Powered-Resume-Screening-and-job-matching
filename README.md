@@ -5,6 +5,8 @@
 An AI-driven full-stack web application that automates resume screening, skill gap analysis, and candidate ranking using Machine Learning and Natural Language Processing.
 
 
+
+
 📌 Problem Statement
 
 Companies receive hundreds of resumes per job opening. Manual screening is:
