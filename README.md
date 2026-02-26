@@ -99,7 +99,7 @@ Final Score = (Skill Match × 70%) + (TF-IDF Score × 30%) <br><br>
 
 
 📷 Screenshots
-![Home Page](screenshots/Screenshot 2026-02-26 105944.png)
+![Home Page](screenshots/home_page.png)
 
 <br><br>
 📈 Business Impact
